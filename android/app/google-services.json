@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "822345828771",
+    "project_id": "e-commerce-bab20",
+    "storage_bucket": "e-commerce-bab20.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:822345828771:android:c2b8a6f65b5113988a3216",
+        "android_client_info": {
+          "package_name": "com.example.task1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "822345828771-sq2lre5tk0ne96s68nae9sh4otkjjj3u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAK4NuVPo24MpJdlGYuwFdOr0NFXvkHN5o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "822345828771-sq2lre5tk0ne96s68nae9sh4otkjjj3u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
