@@ -124,26 +124,21 @@ class kitchen extends StatelessWidget {
                     'Designs Slider ',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   )),
-              CarouselSlider.builder(
-                  itemCount: 2,
-                  // ignore: avoid_types_as_parameter_names
-                  itemBuilder: (buildContext, int, intt) {
-                    // ignore: avoid_unnecessary_containers
-                    return Row(children: [
-                      Image.asset('kitchen.png'),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      Image.asset('living.jpg'),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                    ]);
-                  },
-                  options: CarouselOptions(height: 300, autoPlay:true)
-                  ),
-                  const SizedBox(
-                height: 80,),
+              CarouselSlider(
+                options: CarouselOptions(
+                    autoPlayInterval: Duration(seconds: 1),
+                    autoPlay: true,
+                    height: 300),
+                items: [
+                  Image.asset('assets/kitchen.png'),
+                  Image.asset('assets/living.jpg'),
+                  Image.asset('assets/kitchen.png'),
+                  Image.asset('assets/living.jpg'),
+                ],
+              ),
+              const SizedBox(
+                height: 80,
+              ),
               SizedBox(
                 child: TextButton(
                     onPressed: () {
@@ -160,7 +155,6 @@ class kitchen extends StatelessWidget {
                           // backgroundColor: Color.fromARGB(255, 219, 192, 192),
                           fontSize: 18),
                     )),
-                    
               )
             ],
           ),

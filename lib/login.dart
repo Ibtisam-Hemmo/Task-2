@@ -2,8 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'products.dart';
 
-//code for designing the UI of our text field where the user writes his email id or password
-
+// ignore: use_key_in_widget_constructors
 class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -14,8 +13,6 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  // await final _auth = FirebaseAuth.instance
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,17 +21,22 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 24.0),
           child: Form(
+            key: formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 TextFormField(
+                    validator: (value) {
+                      RegExp regex = RegExp(
+                          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+                      return regex.hasMatch(value!)
+                          ? null
+                          : 'Enter email as example@gmail.com format ';
+                    },
                     keyboardType: TextInputType.emailAddress,
                     textAlign: TextAlign.center,
-                    // onChanged: (value) {
-                    //   emailController = value as TextEditingController;
-                    // },
-                    controller:emailController,
+                    controller: emailController,
                     decoration: kTextFieldDecoration.copyWith(
                       hintText: 'Enter your email',
                     )),
@@ -42,68 +44,45 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 8.0,
                 ),
                 TextFormField(
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'This is required';
+                      }
+                      return null;
+                    },
                     obscureText: true,
                     textAlign: TextAlign.center,
-                    // onChanged: (value) {
-                    //   passwordController = value as TextEditingController;
-                    // },
-                    controller:passwordController,
+                    controller: passwordController,
                     decoration: kTextFieldDecoration.copyWith(
                         hintText: 'Enter your password.')),
                 SizedBox(
                   height: 24.0,
                 ),
-                RoundedButton(
-                    colour: Colors.lightBlueAccent,
-                    title: 'Log In',
-                    onPressed: () {
-                      FirebaseAuth.instance
-                            .signInWithEmailAndPassword(
-                                email: emailController.text,
-                                password: passwordController.text)
-                            .then((value) => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Product())))
-                            .onError((error, stackTrace) => print(error));
-                                      }
-          
-                                          )
+                ElevatedButton(
+                  onPressed: () {
+                    if (formKey.currentState!.validate()) {
+                      formKey.currentState!.save();
+                      // FirebaseAuth.instance
+                      //     .signInWithEmailAndPassword(
+                      //         email: emailController.text,
+                      //         password: passwordController.text)
+                      //     .then((value) => Navigator.push(
+                      //         context,
+                      //         MaterialPageRoute(
+                      //             builder: (context) => Product())))
+                      //     .onError((error, stackTrace) => print(error));
+
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Product()));
+                    }
+                  },
+                  child: Text('Login'),
+                  style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20))),
+                ),
               ],
             ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class RoundedButton extends StatelessWidget {
-  RoundedButton(
-      {required this.colour, required this.title, required this.onPressed});
-  final Color colour;
-  final String title;
-  final Function onPressed;
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 16.0),
-      child: Material(
-        elevation: 5.0,
-        color: colour,
-        borderRadius: BorderRadius.circular(30.0),
-        child: MaterialButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Product()),
-            );
-          },
-          minWidth: 200.0,
-          height: 42.0,
-          child: Text(
-            title,
-            style: TextStyle(color: Colors.white),
           ),
         ),
       ),
